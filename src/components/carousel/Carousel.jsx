@@ -1,53 +1,78 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
-import 'swiper/swiper-bundle.min.css';
 
 import CarouselImg1 from '../../assets/carousel-image1.jpg';
 import CarouselImg2 from '../../assets/carousel-image2.jpg';
 import CarouselImg3 from '../../assets/carousel-image3.jpg';
 import CarouselImg4 from '../../assets/carousel-image4.jpg';
-
-SwiperCore.use([Navigation, Pagination, Autoplay]);
+import PrevArrow from '../../assets/icon-swiper-1.svg';
+import NextArrow from '../../assets/icon-swiper-2.svg';
 
 export default function Carousel() {
+  const [imgIndex, setImgIndex] = useState(0);
   const images = [CarouselImg1, CarouselImg2, CarouselImg3, CarouselImg4];
 
-  const handleSlideChange = (swiper) => {
-    if (swiper.isBeginning && swiper.realIndex === swiper.slides.length - 1) {
-      swiper.slideTo(0); // 마지막 슬라이드에서 이전 버튼을 누르면 처음 슬라이드로 이동
-    } else if (swiper.isEnd && swiper.realIndex === 0) {
-      swiper.slideTo(swiper.slides.length - 1); // 처음 슬라이드에서 다음 버튼을 누르면 마지막 슬라이드로 이동
-    }
-  };
+  const handlePrev = () => {
+    setImgIndex((prevBtn) => (prevBtn - 1) + images.length % images.length);
+  }
+
+  const handleNext = () => {
+    setImgIndex((nextBtn) => (nextBtn + 1) % images.length);
+  }
+
+  const autoRotate = () => {
+    const IntervalId = setInterval(() => {
+      setImgIndex((prevIndex) => (prevIndex + 1) % images.length)
+    }, 5000);
+
+    return () => clearInterval(IntervalId);
+  }
+
+  useEffect(() => {
+    const clearAutoRotate = autoRotate();
+    return () => clearAutoRotate();
+  }, []);
+
 
   return (
     <CarouselWrapper>
-      <Swiper
-        spaceBetween={50}
-        slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 10000 }}
-        onSlideChange={handleSlideChange}
-      >
-        {images.map((image, index) => (
-          <SwiperSlide key={index}>
-            <CarouselImage src={image} alt={`Slide ${index + 1}`} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <button onClick={handlePrev} className="prevBtn" type="button"></button>
+      <CarouselImage src={images[imgIndex]} alt="배너 이미지"/>
+      <button onClick={handleNext} className="nextBtn" type="button"></button>
     </CarouselWrapper>
-  );
+  )
+  
 }
 
 const CarouselWrapper = styled.section`
-  width: 100vw;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+ button {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: no-repeat center center/cover;
+ }
+
+ .prevBtn {
+  background-image: url(${PrevArrow});
+  left: 40px;
+ }
+
+ .nextBtn {
+  right: 40px;
+  background-image: url(${NextArrow});
+ }
 `;
 
 const CarouselImage = styled.img`
-  display: block;
-  height: 500px;
+  max-width: 100%;
+  max-height: 500px;
   object-fit: cover;
 `;
+
