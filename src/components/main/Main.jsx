@@ -1,9 +1,10 @@
 import React from 'react';
-import ProductItem from '../productList/ProductItem';
-
+import ProductInfo from '../productList/ProductInfo';
 
 export default function Main() {
   return (
-    <ProductItem />
-  )
+    <>
+      <ProductInfo />
+    </>
+  );
 }

@@ -1,25 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-export default function ProductItem() {
-  const [products, setProducts] = useState([]);
-
-  const url = 'https://openmarket.weniv.co.kr/products'
-
-  useEffect(() => {
-    async function getProducts() {
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        setProducts(data.result);
-      } catch (error) {
-        console.error('데이터를 가져오는 중 오류가 발생했습니다.', error);
-      }
-    };
-    getProducts();
-  }, []);
-
-  
+export default function ProductItem({ key, image, storeName, productName, price }) {
+console.log(key)
+console.log(image)
+console.log(storeName)
   return (
-    <></>
+    <Link to= "/info"
+      state= {{ storeName: storeName }}
+>
+      <ProductItemContainer>
+        <StyledImage src={image} alt="상품 이미지" />
+        <StyledStore>{storeName}</StyledStore>
+        <StyledName>{productName}</StyledName>
+        <StyledPrice>{price}</StyledPrice>
+      </ProductItemContainer>
+    </Link>
   );
 }
+
+const ProductItemContainer = styled.li`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+`;
+
+const StyledImage = styled.img`
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 10px;
+`;
+
+const StyledStore = styled.h3`
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+`;
+
+const StyledName = styled.p`
+  font-size: 16px;
+  margin-bottom: 5px;
+`;
+
+const StyledPrice = styled.p`
+  font-size: 16px;
+  font-weight: bold;
+`;

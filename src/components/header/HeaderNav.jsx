@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import LogoImg from "../../assets/Logo-hodu.png";
+import Logo from "../../assets/Logo-hodu.png";
 import SearchIcon from "../../assets/search.png";
 import CartImg from "../../assets/icon-shopping-cart.svg";
 import User from "../../assets/icon-user.svg";
@@ -22,7 +22,7 @@ export default function HeaderNav() {
       <HeaderNavContainer>
         <HeaderNavLeft>
           <h1>
-            <MainLogoImg src={LogoImg} alt="호두 로고" />
+            <MainLogoImg src={Logo} alt="호두 로고" />
           </h1>
           <h2 className="a11y-hidden">상품 검색창</h2>
           <form onSubmit={handleSubmit}>
@@ -36,7 +36,7 @@ export default function HeaderNav() {
             <CartBtnImg src={CartImg} alt="장바구니로 이동" />
             <CartBtnText>장바구니</CartBtnText>
           </CartBtn>
-          <StyledLink alt="로그인으로 이동">로그인</StyledLink>
+          <StyledLink to="/login"  alt="로그인으로 이동">로그인</StyledLink>
         </HeaderNavRight>
       </HeaderNavContainer>
     </HeaderWrap>
