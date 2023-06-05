@@ -13,12 +13,16 @@ export default function Carousel() {
   const images = [CarouselImg1, CarouselImg2, CarouselImg3, CarouselImg4];
 
   const handlePrev = () => {
-    setImgIndex((prevBtn) => (prevBtn - 1) + images.length % images.length);
+    setImgIndex((prevIndex) => (prevIndex - 1) + images.length % images.length);
+    if(imgIndex == 0) {
+      setImgIndex(images.length-1);
+    }
   }
 
   const handleNext = () => {
-    setImgIndex((nextBtn) => (nextBtn + 1) % images.length);
+    setImgIndex((nextIndex) => (nextIndex + 1) % images.length);
   }
+
 
   const autoRotate = () => {
     const IntervalId = setInterval(() => {
@@ -49,11 +53,13 @@ const CarouselWrapper = styled.section`
   display: flex;
   justify-content: center;
   position: relative;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
 
  button {
   position: absolute;
-  width: 50px;
-  height: 50px;
+  padding: 20px;
+  width: 70px;
+  height: 70px;
   top: 50%;
   transform: translateY(-50%);
   background: no-repeat center center/cover;
@@ -71,7 +77,7 @@ const CarouselWrapper = styled.section`
 `;
 
 const CarouselImage = styled.img`
-  max-width: 100%;
+  max-width: 1280px;
   max-height: 500px;
   object-fit: cover;
 `;
