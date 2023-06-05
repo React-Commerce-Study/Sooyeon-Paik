@@ -7,48 +7,67 @@ console.log(key)
 console.log(image)
 console.log(storeName)
   return (
-    <Link to= "/info"
-      state= {{ storeName: storeName }}
->
-      <ProductItemContainer>
+    <InfoLink to="/info" state={{ image: image, storeName: storeName, productName: productName, price: price }}>
+     <ProductItems>
+      <ProductItemInfo>
+        <div className="image-cover">
         <StyledImage src={image} alt="상품 이미지" />
+        </div>
         <StyledStore>{storeName}</StyledStore>
         <StyledName>{productName}</StyledName>
         <StyledPrice>{price}</StyledPrice>
-      </ProductItemContainer>
-    </Link>
+      </ProductItemInfo>
+      </ProductItems>
+    </InfoLink>
   );
 }
 
-const ProductItemContainer = styled.li`
+const InfoLink = styled(Link)`
+  display: block;
+  max-width: 380px;
+`
+
+const ProductItems = styled.ul`
+  margin: 0 auto;
+`
+
+const ProductItemInfo = styled.li`
+max-width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 5px;
+
+  .image-cover {
+    max-width: 380px;
+    height: 380px;
+    margin-bottom: 16px;
+    
+  }
 `;
 
 const StyledImage = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  margin-bottom: 10px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
 `;
 
-const StyledStore = styled.h3`
+const StyledStore = styled.span`
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 `;
 
 const StyledName = styled.p`
   font-size: 16px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 `;
 
-const StyledPrice = styled.p`
+const StyledPrice = styled.strong`
   font-size: 16px;
   font-weight: bold;
+  &:after {
+    content:"원";
+    margin-left: 1px;
+  }
 `;

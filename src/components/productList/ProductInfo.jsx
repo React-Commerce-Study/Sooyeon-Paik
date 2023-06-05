@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ProductItem from './ProductItem.jsx';
+import { getProducts } from "../../api/Apis.js"
 
 export default function ProductInfo() {
   const [products, setProducts] = useState([]);
 
-  const url = 'https://openmarket.weniv.co.kr/products/';
-
-  async function getProducts() {
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data);
-      setProducts(data.results);
-    } catch (error) {
-      console.error('데이터를 가져오는 중 오류가 발생했습니다.', error);
-    }
+  const fetchProduct = async() => {
+      try {
+        const data = await getProducts();
+        setProducts(data.results);
+        console.log(data.results);
+      }
+      catch (error) {
+        console.log("데이터를 가져오는 중 오류가 발생했습니다", error)
+      }
   }
-
   useEffect(() => {
-    getProducts();
-  }, []);
+  fetchProduct();
+},
+    []
+   );
 
   return (
     <ProductList>
@@ -37,9 +37,10 @@ export default function ProductInfo() {
   );
 }
 
-const ProductList = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-  padding: 20px;
-`;
+const ProductList = styled.section`
+max-width: 1280px;
+margin: 80px auto;
+ display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 70px;
+  `
