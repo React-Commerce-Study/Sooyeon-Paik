@@ -10,6 +10,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -20,9 +21,17 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "baseUrl": "src"
+    "baseUrl": "./src",
+    "path": {
+    "@assets/*": ["src/assets/*"],
+    "@components/*": ["src/components/*"]
   },
-  "include": [
-    "src"
-  ]
+    "outDir": "./dist"
+  },
+  "files": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
 }
